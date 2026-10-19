@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment - MindEase</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/assessment.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo">
+                    <span class="logo">🧠</span>
+                    <span class="brand-name">MindEase</span>
+                </a>
+                <button class="sidebar-toggle" id="sidebarToggle">×</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span class="nav-text">Dashboard</span></a>
+                <a href="assessment.html" class="nav-item active"><span class="nav-icon">📝</span><span class="nav-text">Assessment</span></a>
+                <a href="wellness-plan.html" class="nav-item"><span class="nav-icon">💡</span><span class="nav-text">Wellness Plan</span></a>
+                <a href="habits.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Habit Tracker</span></a>
+                <a href="focus.html" class="nav-item"><span class="nav-icon">⏱️</span><span class="nav-text">Focus Timer</span></a>
+                <a href="progress.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Progress</span></a>
+                <a href="resources.html" class="nav-item"><span class="nav-icon">📚</span><span class="nav-text">Resources</span></a>
+                <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-text">Profile</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-secondary btn-sm btn-block">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span><span></span><span></span>
+                </button>
+                <div class="mobile-brand">MindEase</div>
+            </div>
+
+            <div class="content-container">
+                <div class="assessment-container">
+                    <!-- Introduction -->
+                    <div id="introScreen" class="assessment-intro">
+                        <h1>ADHD-Related Wellness Screening</h1>
+                        <div class="intro-content">
+                            <p>This questionnaire will help you explore patterns related to attention, organization, and daily functioning. It takes about 10-15 minutes to complete.</p>
+                            
+                            <div class="info-box">
+                                <h3>Important Information</h3>
+                                <ul>
+                                    <li>This is <strong>not a diagnostic tool</strong>. Only qualified healthcare professionals can diagnose ADHD.</li>
+                                    <li>Your responses describe your experiences over the past 6 months.</li>
+                                    <li>Answer honestly - there are no right or wrong answers.</li>
+                                    <li>You can save your progress and return later.</li>
+                                    <li>Your information is private and secure.</li>
+                                </ul>
+                            </div>
+
+                            <div class="response-scale">
+                                <h3>Response Scale</h3>
+                                <div class="scale-items">
+                                    <div class="scale-item"><strong>0</strong> - Never</div>
+                                    <div class="scale-item"><strong>1</strong> - Rarely</div>
+                                    <div class="scale-item"><strong>2</strong> - Sometimes</div>
+                                    <div class="scale-item"><strong>3</strong> - Often</div>
+                                    <div class="scale-item"><strong>4</strong> - Very Often</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary btn-lg" id="startAssessment">Begin Assessment</button>
+                            <a href="dashboard.html" class="btn btn-secondary btn-lg">Back to Dashboard</a>
+                        </div>
+                    </div>
+
+                    <!-- Assessment Questions -->
+                    <div id="questionScreen" style="display: none;">
+                        <div class="assessment-header">
+                            <div class="progress-info">
+                                <span id="questionNumber">Question 1 of 25</span>
+                                <span id="sectionName">Attention and Concentration</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                        </div>
+
+                        <div class="question-card">
+                            <h2 id="questionText"></h2>
+                            
+                            <div class="response-options" id="responseOptions">
+                                <label class="response-option">
+                                    <input type="radio" name="response" value="0">
+                                    <span class="option-content">
+                                        <span class="option-value">0</span>
+                                        <span class="option-label">Never</span>
+                                    </span>
+                                </label>
+                                <label class="response-option">
+                                    <input type="radio" name="response" value="1">
+                                    <span class="option-content">
+                                        <span class="option-value">1</span>
+                                        <span class="option-label">Rarely</span>
+                                    </span>
+                                </label>
+                                <label class="response-option">
+                                    <input type="radio" name="response" value="2">
+                                    <span class="option-content">
+                                        <span class="option-value">2</span>
+                                        <span class="option-label">Sometimes</span>
+                                    </span>
+                                </label>
+                                <label class="response-option">
+                                    <input type="radio" name="response" value="3">
+                                    <span class="option-content">
+                                        <span class="option-value">3</span>
+                                        <span class="option-label">Often</span>
+                                    </span>
+                                </label>
+                                <label class="response-option">
+                                    <input type="radio" name="response" value="4">
+                                    <span class="option-content">
+                                        <span class="option-value">4</span>
+                                        <span class="option-label">Very Often</span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="error-message" id="errorMessage"></div>
+                        </div>
+
+                        <div class="assessment-nav">
+                            <button class="btn btn-secondary" id="prevBtn">← Previous</button>
+                            <button class="btn btn-secondary" id="saveDraftBtn">Save Progress</button>
+                            <button class="btn btn-primary" id="nextBtn">Next →</button>
+                        </div>
+                    </div>
+
+                    <!-- Review Screen -->
+                    <div id="reviewScreen" style="display: none;">
+                        <h1>Review Your Responses</h1>
+                        <p>Please review your answers before submitting. You can go back to change any response.</p>
+                        
+                        <div class="review-summary" id="reviewSummary"></div>
+
+                        <div class="assessment-nav">
+                            <button class="btn btn-secondary" id="backToQuestionsBtn">← Back to Questions</button>
+                            <button class="btn btn-primary btn-lg" id="submitBtn">Submit Assessment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/assessment.js"></script>
+</body>
+</html>

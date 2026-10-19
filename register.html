@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - MindEase</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="home" class="auth-logo">
+                    <span class="logo">🧠</span>
+                    <span class="brand-name">MindEase</span>
+                </a>
+                <h1>Create Your Account</h1>
+                <p>Start your journey towards better focus and well-being</p>
+            </div>
+
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                    <span class="form-error" id="nameError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="form-error" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <span class="form-hint">At least 8 characters with uppercase, lowercase, and number</span>
+                    <span class="form-error" id="passwordError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <span class="form-error" id="confirmPasswordError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="ageRange">Age Range (Optional)</label>
+                    <select id="ageRange" name="ageRange">
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                        <option value="under-18">Under 18</option>
+                        <option value="18-24">18-24</option>
+                        <option value="25-34">25-34</option>
+                        <option value="35-44">35-44</option>
+                        <option value="45-54">45-54</option>
+                        <option value="55-plus">55+</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span>I understand that MindEase is a wellness tool and not a diagnostic service. I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a>.</span>
+                    </label>
+                    <span class="form-error" id="agreeError"></span>
+                </div>
+
+                <div class="form-error" id="formError"></div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
+                    Create Account
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html">Sign in</a></p>
+                <p style="margin-top: 1rem;">
+                    <a href="home" style="color: var(--text-secondary); font-size: 0.9rem;">← Learn about MindEase</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/register.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Results - MindEase</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo">
+                    <span class="logo">🧠</span>
+                    <span class="brand-name">MindEase</span>
+                </a>
+                <button class="sidebar-toggle" id="sidebarToggle">×</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span class="nav-text">Dashboard</span></a>
+                <a href="assessment.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-text">Assessment</span></a>
+                <a href="wellness-plan.html" class="nav-item"><span class="nav-icon">💡</span><span class="nav-text">Wellness Plan</span></a>
+                <a href="habits.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Habit Tracker</span></a>
+                <a href="focus.html" class="nav-item"><span class="nav-icon">⏱️</span><span class="nav-text">Focus Timer</span></a>
+                <a href="progress.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Progress</span></a>
+                <a href="resources.html" class="nav-item"><span class="nav-icon">📚</span><span class="nav-text">Resources</span></a>
+                <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-text">Profile</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-secondary btn-sm btn-block">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span><span></span><span></span>
+                </button>
+                <div class="mobile-brand">MindEase</div>
+            </div>
+
+            <div class="content-container">
+                <div id="loadingState" class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading your results...</p>
+                </div>
+
+                <div id="resultsContent" style="display: none;">
+                    <div class="page-header">
+                        <h1>Your Assessment Results</h1>
+                        <p class="page-subtitle">Understanding your response patterns</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="info-box" style="background: var(--primary-lavender); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem;">
+                                <h3 style="color: var(--primary-purple);">What These Results Mean</h3>
+                                <p>These results describe the frequency of experiences you reported. They do not diagnose ADHD or any other condition. Only a qualified healthcare professional can provide a comprehensive evaluation.</p>
+                                <p style="margin: 0;">Similar patterns can result from stress, sleep issues, anxiety, or other factors. Consider discussing persistent difficulties with a professional.</p>
+                            </div>
+
+                            <h2>Response Frequency by Category</h2>
+                            <div id="summarySection"></div>
+
+                            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                                <h3>Next Steps</h3>
+                                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                                    <button id="generatePlanBtn" class="btn btn-primary">Generate Wellness Plan</button>
+                                    <a href="resources.html" class="btn btn-secondary">Learn More</a>
+                                    <a href="dashboard.html" class="btn btn-secondary">Back to Dashboard</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const assessmentId = urlParams.get('id');
+            
+            if (!assessmentId) {
+                window.location.href = '/dashboard.html';
+                return;
+            }
+            
+            try {
+                const data = await assessmentAPI.getAssessment(assessmentId);
+                displayResults(data.assessment);
+                
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('resultsContent').style.display = 'block';
+                
+                // Generate plan button
+                document.getElementById('generatePlanBtn').addEventListener('click', async () => {
+                    const btn = document.getElementById('generatePlanBtn');
+                    btn.disabled = true;
+                    btn.textContent = 'Generating...';
+                    
+                    try {
+                        await wellnessAPI.generatePlan(assessmentId);
+                        window.location.href = '/wellness-plan.html';
+                    } catch (error) {
+                        alert('Error generating plan. Please try again.');
+                        btn.disabled = false;
+                        btn.textContent = 'Generate Wellness Plan';
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading results:', error);
+                document.getElementById('loadingState').innerHTML = '<p>Error loading results. <a href="/dashboard.html">Return to dashboard</a></p>';
+            }
+        });
+        
+        function displayResults(assessment) {
+            const summaries = assessment.sectionSummaries;
+            const labels = ['Never', 'Rarely', 'Sometimes', 'Often', 'Very Often'];
+            
+            const sections = [
+                { key: 'attention', name: 'Attention and Concentration' },
+                { key: 'organization', name: 'Organization and Time Management' },
+                { key: 'restlessness', name: 'Restlessness and Activity' },
+                { key: 'impulsivity', name: 'Impulsivity' },
+                { key: 'functioning', name: 'Everyday Functioning' }
+            ];
+            
+            let html = '<div style="display: flex; flex-direction: column; gap: 1.5rem;">';
+            
+            sections.forEach(section => {
+                const value = summaries[section.key];
+                const percentage = (value / 4) * 100;
+                const label = value <= 0.5 ? labels[0] : value <= 1.5 ? labels[1] : value <= 2.5 ? labels[2] : value <= 3.5 ? labels[3] : labels[4];
+                
+                html += `
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <strong>${section.name}</strong>
+                            <span style="color: var(--primary-purple); font-weight: 600;">${value.toFixed(1)} / 4.0 - ${label}</span>
+                        </div>
+                        <div style="height: 12px; background: var(--border-color); border-radius: 6px; overflow: hidden;">
+                            <div style="height: 100%; width: ${percentage}%; background: linear-gradient(90deg, var(--primary-purple), var(--primary-purple-dark)); transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            document.getElementById('summarySection').innerHTML = html;
+        }
+    </script>
+</body>
+</html>

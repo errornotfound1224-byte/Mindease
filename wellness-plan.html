@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Plan - MindEase</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo">
+                    <span class="logo">🧠</span>
+                    <span class="brand-name">MindEase</span>
+                </a>
+                <button class="sidebar-toggle" id="sidebarToggle">×</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span class="nav-text">Dashboard</span></a>
+                <a href="assessment.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-text">Assessment</span></a>
+                <a href="wellness-plan.html" class="nav-item active"><span class="nav-icon">💡</span><span class="nav-text">Wellness Plan</span></a>
+                <a href="habits.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Habit Tracker</span></a>
+                <a href="focus.html" class="nav-item"><span class="nav-icon">⏱️</span><span class="nav-text">Focus Timer</span></a>
+                <a href="progress.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Progress</span></a>
+                <a href="resources.html" class="nav-item"><span class="nav-icon">📚</span><span class="nav-text">Resources</span></a>
+                <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-text">Profile</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-secondary btn-sm btn-block">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span><span></span><span></span>
+                </button>
+                <div class="mobile-brand">MindEase</div>
+            </div>
+
+            <div class="content-container">
+                <div class="page-header">
+                    <h1>Your Personalized Wellness Plan</h1>
+                    <p class="page-subtitle">Practical strategies tailored to your needs</p>
+                </div>
+
+                <div id="loadingState" class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading your wellness plan...</p>
+                </div>
+
+                <div id="planContent" style="display: none;"></div>
+                
+                <div id="noAssessment" style="display: none;">
+                    <div class="card">
+                        <div class="card-body" style="text-align: center; padding: 3rem;">
+                            <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                                Complete an assessment first to generate your personalized wellness plan.
+                            </p>
+                            <a href="assessment.html" class="btn btn-primary">Start Assessment</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const plans = await wellnessAPI.getPlans();
+                
+                if (plans.plans.length === 0) {
+                    document.getElementById('loadingState').style.display = 'none';
+                    document.getElementById('noAssessment').style.display = 'block';
+                    return;
+                }
+                
+                const latestPlan = plans.plans[0];
+                displayPlan(latestPlan);
+                
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('planContent').style.display = 'block';
+            } catch (error) {
+                console.error('Error loading plan:', error);
+                document.getElementById('loadingState').innerHTML = '<p>Error loading wellness plan.</p>';
+            }
+        });
+        
+        function displayPlan(plan) {
+            const categories = {
+                'focus': { name: 'Focus Strategies', icon: '🎯' },
+                'organization': { name: 'Organization', icon: '📋' },
+                'time-management': { name: 'Time Management', icon: '⏰' },
+                'restlessness': { name: 'Restlessness Management', icon: '🏃' },
+                'routines': { name: 'Daily Routines', icon: '📅' },
+                'emotional-wellbeing': { name: 'Emotional Well-being', icon: '💜' }
+            };
+            
+            let html = `<p style="margin-bottom: 2rem; color: var(--text-secondary);">Generated by ${plan.generatedBy === 'ai' ? 'AI' : 'rule-based'} engine on ${new Date(plan.createdAt).toLocaleDateString()}</p>`;
+            
+            Object.keys(categories).forEach(catKey => {
+                const recs = plan.recommendations.filter(r => r.category === catKey);
+                if (recs.length === 0) return;
+                
+                const cat = categories[catKey];
+                html += `
+                    <div class="card" style="margin-bottom: 1.5rem;">
+                        <div class="card-header">
+                            <h2>${cat.icon} ${cat.name}</h2>
+                        </div>
+                        <div class="card-body">
+                `;
+                
+                recs.forEach((rec, index) => {
+                    html += `
+                        <div style="padding: 1.5rem; background: var(--bg-primary); border-radius: var(--radius-md); margin-bottom: 1rem;">
+                            <h3 style="color: var(--primary-purple);">${rec.title}</h3>
+                            <p>${rec.description}</p>
+                            <p><strong>Why it helps:</strong> ${rec.whyItHelps}</p>
+                            <p><strong>Frequency:</strong> ${rec.frequency}</p>
+                            <p><strong>Estimated time:</strong> ${rec.estimatedTime}</p>
+                            <details style="margin-top: 1rem;">
+                                <summary style="cursor: pointer; font-weight: 600;">Implementation Steps</summary>
+                                <ol style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                                    ${rec.steps.map(step => `<li>${step}</li>`).join('')}
+                                </ol>
+                            </details>
+                            <p style="margin-top: 1rem; font-style: italic; color: var(--text-secondary);">Reflection: ${rec.reflectionQuestion}</p>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('planContent').innerHTML = html;
+        }
+    </script>
+</body>
+</html>

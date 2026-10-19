@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker - MindEase</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo"><span class="logo">🧠</span><span class="brand-name">MindEase</span></a>
+                <button class="sidebar-toggle" id="sidebarToggle">×</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span class="nav-text">Dashboard</span></a>
+                <a href="assessment.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-text">Assessment</span></a>
+                <a href="wellness-plan.html" class="nav-item"><span class="nav-icon">💡</span><span class="nav-text">Wellness Plan</span></a>
+                <a href="habits.html" class="nav-item active"><span class="nav-icon">✅</span><span class="nav-text">Habit Tracker</span></a>
+                <a href="focus.html" class="nav-item"><span class="nav-icon">⏱️</span><span class="nav-text">Focus Timer</span></a>
+                <a href="progress.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Progress</span></a>
+                <a href="resources.html" class="nav-item"><span class="nav-icon">📚</span><span class="nav-text">Resources</span></a>
+                <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-text">Profile</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-secondary btn-sm btn-block">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+                <div class="mobile-brand">MindEase</div>
+            </div>
+
+            <div class="content-container">
+                <div class="page-header">
+                    <h1>Habit Tracker</h1>
+                    <p class="page-subtitle">Build consistency, one day at a time</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Create New Habit</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="habitForm">
+                            <div class="form-group">
+                                <label for="habitTitle">Habit Title *</label>
+                                <input type="text" id="habitTitle" placeholder="e.g., Morning meditation" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="habitDescription">Description (Optional)</label>
+                                <textarea id="habitDescription" rows="2" placeholder="Why is this habit important to you?"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="habitFrequency">Target Frequency</label>
+                                <select id="habitFrequency">
+                                    <option value="daily">Daily</option>
+                                    <option value="weekdays">Weekdays</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="submitHabitBtn">Add Habit</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Your Habits</h2>
+                    </div>
+                    <div class="card-body" id="habitsList">
+                        <div class="loading-state">
+                            <div class="spinner"></div>
+                            <p>Loading habits...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>This Week's Progress</h2>
+                    </div>
+                    <div class="card-body" id="weeklyProgress">
+                        <p class="text-muted">Complete your first habit to see weekly progress</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/habits.js"></script>
+</body>
+</html>

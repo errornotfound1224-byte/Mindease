@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MindEase</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo">
+                    <span class="logo">🧠</span>
+                    <span class="brand-name">MindEase</span>
+                </a>
+                <button class="sidebar-toggle" id="sidebarToggle">×</button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="assessment.html" class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Assessment</span>
+                </a>
+                <a href="wellness-plan.html" class="nav-item">
+                    <span class="nav-icon">💡</span>
+                    <span class="nav-text">Wellness Plan</span>
+                </a>
+                <a href="habits.html" class="nav-item">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Habit Tracker</span>
+                </a>
+                <a href="focus.html" class="nav-item">
+                    <span class="nav-icon">⏱️</span>
+                    <span class="nav-text">Focus Timer</span>
+                </a>
+                <a href="progress.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Progress</span>
+                </a>
+                <a href="resources.html" class="nav-item">
+                    <span class="nav-icon">📚</span>
+                    <span class="nav-text">Resources</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Profile</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-secondary btn-sm btn-block">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="mobile-brand">MindEase</div>
+            </div>
+
+            <div class="content-container">
+                <div class="page-header">
+                    <h1 id="welcomeMessage">Welcome back!</h1>
+                    <p class="page-subtitle">Let's take today one step at a time.</p>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loadingState" class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading your dashboard...</p>
+                </div>
+
+                <!-- Dashboard Content -->
+                <div id="dashboardContent" style="display: none;">
+                    <!-- Quick Stats -->
+                    <div class="stats-grid" id="statsGrid">
+                        <!-- Stats will be populated by JavaScript -->
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Quick Actions</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-actions-grid">
+                                <a href="assessment.html" class="action-card" id="assessmentAction">
+                                    <span class="action-icon">📝</span>
+                                    <h3>Start Assessment</h3>
+                                    <p>Complete the wellness questionnaire</p>
+                                </a>
+                                <a href="habits.html" class="action-card">
+                                    <span class="action-icon">✅</span>
+                                    <h3>Track Habits</h3>
+                                    <p>Log your daily habits</p>
+                                </a>
+                                <a href="focus.html" class="action-card">
+                                    <span class="action-icon">⏱️</span>
+                                    <h3>Focus Session</h3>
+                                    <p>Start a timed work session</p>
+                                </a>
+                                <a href="progress.html" class="action-card">
+                                    <span class="action-icon">📊</span>
+                                    <h3>View Progress</h3>
+                                    <p>See your growth over time</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="dashboard-row">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Today's Habits</h2>
+                            </div>
+                            <div class="card-body" id="todayHabits">
+                                <p class="text-muted">No habits yet. <a href="habits.html">Create your first habit</a></p>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Assessment Status</h2>
+                            </div>
+                            <div class="card-body" id="assessmentStatus">
+                                <p class="text-muted">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

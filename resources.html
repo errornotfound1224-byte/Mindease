@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Resources - MindEase</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo"><span class="logo">🧠</span><span class="brand-name">MindEase</span></a>
+                <button class="sidebar-toggle" id="sidebarToggle">×</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span class="nav-text">Dashboard</span></a>
+                <a href="assessment.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-text">Assessment</span></a>
+                <a href="wellness-plan.html" class="nav-item"><span class="nav-icon">💡</span><span class="nav-text">Wellness Plan</span></a>
+                <a href="habits.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Habit Tracker</span></a>
+                <a href="focus.html" class="nav-item"><span class="nav-icon">⏱️</span><span class="nav-text">Focus Timer</span></a>
+                <a href="progress.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Progress</span></a>
+                <a href="resources.html" class="nav-item active"><span class="nav-icon">📚</span><span class="nav-text">Resources</span></a>
+                <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-text">Profile</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-secondary btn-sm btn-block">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+                <div class="mobile-brand">MindEase</div>
+            </div>
+
+            <div class="content-container">
+                <div class="page-header">
+                    <h1>Educational Resources</h1>
+                    <p class="page-subtitle">Learn about ADHD and wellness strategies</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>Understanding ADHD</h2></div>
+                    <div class="card-body">
+                        <p>ADHD (Attention-Deficit/Hyperactivity Disorder) is a neurodevelopmental condition affecting attention, impulse control, and activity levels.</p>
+                        <p><strong>Professional Diagnosis:</strong> Only qualified healthcare professionals can diagnose ADHD through comprehensive evaluation including clinical interviews, observations, and standardized assessments.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>When to Seek Professional Help</h2></div>
+                    <div class="card-body">
+                        <p>Consider consulting a healthcare professional if:</p>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Attention difficulties significantly affect school, work, or relationships</li>
+                            <li>Symptoms have persisted for six months or longer</li>
+                            <li>Multiple areas of life are impacted</li>
+                            <li>You want a comprehensive evaluation and treatment options</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/sidebar.js"></script>
+</body>
+</html>

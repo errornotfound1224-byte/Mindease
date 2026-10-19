@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - MindEase</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo"><span class="logo">🧠</span><span class="brand-name">MindEase</span></a>
+                <button class="sidebar-toggle" id="sidebarToggle">×</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span class="nav-text">Dashboard</span></a>
+                <a href="assessment.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-text">Assessment</span></a>
+                <a href="wellness-plan.html" class="nav-item"><span class="nav-icon">💡</span><span class="nav-text">Wellness Plan</span></a>
+                <a href="habits.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Habit Tracker</span></a>
+                <a href="focus.html" class="nav-item"><span class="nav-icon">⏱️</span><span class="nav-text">Focus Timer</span></a>
+                <a href="progress.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Progress</span></a>
+                <a href="resources.html" class="nav-item"><span class="nav-icon">📚</span><span class="nav-text">Resources</span></a>
+                <a href="profile.html" class="nav-item active"><span class="nav-icon">👤</span><span class="nav-text">Profile</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-secondary btn-sm btn-block">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+                <div class="mobile-brand">MindEase</div>
+            </div>
+
+            <div class="content-container">
+                <div class="page-header">
+                    <h1>Profile & Settings</h1>
+                    <p class="page-subtitle">Manage your account</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>Account Information</h2></div>
+                    <div class="card-body" id="profileInfo">
+                        <div class="loading-state">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>Account Actions</h2></div>
+                    <div class="card-body">
+                        <button id="deleteAccountBtn" class="btn btn-secondary" style="background: #E53E3E; color: white; border: none;">Delete Account</button>
+                        <p class="text-muted" style="margin-top: 0.5rem;">This action cannot be undone.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const data = await profileAPI.getProfile();
+                const user = data.profile;
+                
+                document.getElementById('profileInfo').innerHTML = `
+                    <p><strong>Name:</strong> ${user.name}</p>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>Member since:</strong> ${new Date(user.createdAt).toLocaleDateString()}</p>
+                `;
+                
+                document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+                    if (confirm('Are you sure you want to delete your account? This will permanently delete all your data and cannot be undone.')) {
+                        if (confirm('This is your final confirmation. Delete account?')) {
+                            try {
+                                await profileAPI.deleteAccount();
+                                alert('Account deleted successfully.');
+                                window.location.href = '/index.html';
+                            } catch (error) {
+                                alert('Error deleting account: ' + error.message);
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                document.getElementById('profileInfo').innerHTML = '<p>Error loading profile</p>';
+            }
+        });
+    </script>
+</body>
+</html>
